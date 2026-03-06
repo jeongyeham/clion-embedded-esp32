@@ -4,9 +4,12 @@ import com.intellij.execution.configurations.ConfigurationFactory;
 import com.intellij.execution.configurations.RunConfiguration;
 import com.intellij.execution.configurations.RunConfigurationSingletonPolicy;
 import com.intellij.ide.ui.ProductIcons;
+import com.intellij.openapi.options.SettingsEditor;
+import com.intellij.openapi.options.SettingsEditorGroup;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.IconLoader;
 import com.intellij.openapi.util.NotNullLazyValue;
+import com.jetbrains.cidr.cpp.execution.CMakeAppRunConfiguration;
 import com.jetbrains.cidr.cpp.execution.CMakeRunConfigurationType;
 import javax.swing.Icon;
 import org.jetbrains.annotations.NotNull;
@@ -54,8 +57,11 @@ public class OpenOcdConfigurationType extends CMakeRunConfigurationType {
     }
 
     @Override
-    public OpenOcdConfigurationEditor createEditor(@NotNull Project project) {
-        return new OpenOcdConfigurationEditor(project, getHelper(project));
+    public SettingsEditor<? extends CMakeAppRunConfiguration> createEditor(@NotNull Project project) {
+        SettingsEditorGroup<CMakeAppRunConfiguration> group = new SettingsEditorGroup<>();
+        group.addEditor("Configuration", new OpenOcdConfigurationEditor(project, getHelper(project)));
+        group.addEditor("Hardware", new OpenOcdHardwareConfigurationEditor(project));
+        return group;
     }
 
     @NotNull

@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Add dedicated "Hardware" tab in run configuration editor for OpenOCD-specific settings
+
 ## [0.4.4] - 2025-09-16
 
 ### Fixed
